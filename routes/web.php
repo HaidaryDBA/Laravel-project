@@ -1,8 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('welcome');
-    echo "Hello world"
-});
+
+Route::get('/', [HomeController::class, 'index']);
+    
+
+
+Route::get('/about', [AboutController::class , 'index']);
+
+Route::get("/contact", [ContactController::class, 'index']);
+    
+
+
+
