@@ -12,5 +12,13 @@ class Borrowing extends Model
         "borrowed_at",
         "due_at",
         "returned_at",
+
+
     ];
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+    public function book(){
+        return $this->belongsTo(Book::class);
+    }
 }
