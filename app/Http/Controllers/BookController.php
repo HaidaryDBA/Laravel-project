@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Book;
 use Illuminate\Http\Request;
-
+use App\Http\requests\UpdateBookRequest;
 class BookController extends Controller
 {
     /**
@@ -11,7 +11,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+         return Book::with(["author", "category"])
+         ->latest()
+         ->paginate(10);
     }
 
     /**
@@ -19,30 +21,34 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $book = Book::create($request->validated());
+            return response()->json($book, 201);
     }
-
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Book $book)
     {
-        //
+        return $book->load(["author", "category"]);
     }
+    
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateBookRequest $request, Book $book)
     {
-        //
+        // for updating data we need the following code
+        $book->update($request->validated());
+        return response() ->json($book, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Book $book)
     {
-        //
+        $book->delete();
+        return response()->noContent();
     }
 }

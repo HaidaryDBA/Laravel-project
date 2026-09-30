@@ -12,7 +12,7 @@ class UpdateBookRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,6 +24,15 @@ class UpdateBookRequest extends FormRequest
     {
         return [
             //
+            'title' => "string|required|max:255",
+            'description' => "string|required|nullable",
+            'isbn' => "string|unique:books,isbn|required",
+            'published_year' => "nullable|integer|between:1000,2026",
+            'author_id' => "required|exists:authors,id",
+            'category_id' => "required|exists:categories,id"
+
+
+
         ];
     }
 }
